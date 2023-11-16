@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Product } from 'src/app/models/product';
 import { ProductService } from 'src/app/services/product.service';
 @Component({
@@ -6,34 +6,22 @@ import { ProductService } from 'src/app/services/product.service';
   templateUrl: './list-product.component.html',
   styleUrls: ['./list-product.component.css']
 })
-export class ListProductComponent {
+export class ListProductComponent implements OnInit {
 
-  product: Product = {
-    name: '',
-    code: '',
-    category:'',
-    image: '',
-    description: ''
-  };
-  submitted = false;
+  data?:  Product[];
+ 
 
   constructor(private productServices: ProductService) {}
 
-  saveProduct(): void {
-    const data = {
-      name: this.product.name,
-      code: this.product.code,
-      category: this.product.category,
-      image: this.product.image,
-      description: this.product.description
-    };
-
-    this.productServices.create(data).subscribe({
-      next: (res) => {
-        console.log(res);
-        this.submitted = true;
+  ngOnInit() {
+    this.productServices.getAll().subscribe(
+      data => {
+        this.data = data;
+        console.log(data);
       },
-      error: (e) => console.error(e)
-    });
+      error => {
+        console.log(error);
+      });
   }
-}
+  }
+

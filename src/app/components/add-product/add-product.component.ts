@@ -12,11 +12,10 @@ import { FormsModule } from '@angular/forms';
 export class AddProductComponent {
 
   selectedFile:  File | null = null;
-
-
-  product : Product = {
+  product = {
     name: '',
     code: '',
+    selectedCategories:'',
     category:'',
     image: '',
     description: ''
@@ -24,30 +23,31 @@ export class AddProductComponent {
   submitted = false;
 
 
-  onFileSelected(event: any) {
-    const file: File = event.target.files[0];
-    this.selectedFile = file;
+  onFileSelected(event: any): void {
+    const files: FileList = event.target.files;
+    this.selectedFile = files.item(0);
   }
 
 
+
   constructor(private productService: ProductService) {}
-  
+
   categories: string[] = ['Author', 'Multiselect', 'Accordions', 'Radio Buttons', 'Search Boxes', 'Tables'];
-  selectedCategories: string[] = [];
+
 
 
 
 
   saveProduct(): void {
-    const data = {
-      name: this.product.name,
-      code: this.product.code,
-      category: this.product.category,
-      // image: this.selectedFile,
-      description: this.product.description
-    };
-
-    this.productService.create(data).subscribe({
+    const formData = new FormData();
+    formData.append('name', this.product.name);
+    formData.append('code', this.product.code);
+    formData.append('category',this.product.selectedCategories);
+    formData.append('description', this.product.description);
+    if (this.selectedFile) {
+      formData.append('image', this.selectedFile);
+    }
+    this.productService.create(formData).subscribe({
       next: (res) => {
         console.log(res);
         this.submitted = true;

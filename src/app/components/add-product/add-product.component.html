@@ -33,8 +33,11 @@
           
             <div class="form-group mb-3">
             <label for="category">Category</label>
-            <select id="choices-multiple-remove-button" class="form-control" [(ngModel)]="selectedCategories" required>
-                <option *ngFor="let category of categories" [value]="category">{{ category }}</option>
+            <select id="choices-multiple-remove-button" class="form-control" name="selectedCategories" [(ngModel)]="product.selectedCategories" required>
+                <option value="Author">Author</option>
+                <option value="Accordions">Accordions</option>
+                <option value="Multiselect">Multiselect</option>
+                <option value="Search">Search</option>
             </select>
             </div>
   
