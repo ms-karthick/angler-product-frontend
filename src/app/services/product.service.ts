@@ -3,8 +3,6 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Product } from '../models/product';
 
-const baseUrl = 'http://localhost:3000/api/product/add';
-
 @Injectable({
   providedIn: 'root'
 })
@@ -18,14 +16,14 @@ export class ProductService {
   }
 
   get(id: any): Observable<Product> {
-    return this.http.get<Product>(`${baseUrl}/${id}`);
+    return this.http.get<Product>(`${'http://localhost:3000/api/product/edit'}/${id}`);
   }
   create(data: any): Observable<any> {
-    return this.http.post(baseUrl, data);
+    return this.http.post('http://localhost:3000/api/product/add', data);
   }
 
   update(id: any, data: any): Observable<any> {
-    return this.http.put(`${baseUrl}/${id}`, data);
+    return this.http.put(`${'http://localhost:3000/api/product/edit'}/${id}`, data);
   }
 
 }

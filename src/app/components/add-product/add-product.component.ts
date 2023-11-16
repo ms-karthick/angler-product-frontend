@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Product } from 'src/app/models/product';
 import { ProductService } from 'src/app/services/product.service';
-import { FormsModule } from '@angular/forms';
+import { FormsModule,FormGroup, FormControl, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-add-product',
@@ -9,18 +9,35 @@ import { FormsModule } from '@angular/forms';
   styleUrls: ['./add-product.component.css']
 })
 
-export class AddProductComponent {
+export class AddProductComponent implements OnInit{
 
   selectedFile:  File | null = null;
-  product = {
-    name: '',
-    code: '',
-    selectedCategories:'',
-    category:'',
-    image: '',
-    description: ''
-  };
-  submitted = false;
+
+  form!: FormGroup;
+
+  ngOnInit(): void {
+    this.form = new FormGroup({
+      name: new FormControl('', [Validators.required]),
+      code: new FormControl('', Validators.required),
+      selectedCategories: new FormControl(''),
+      image: new FormControl(''),
+      description: new FormControl(''),
+    });
+  }
+
+
+  get f(){
+    return this.form.controls;
+  }
+
+  // product = {
+  //   name: '',
+  //   code: '',
+  //   selectedCategories:'',
+  //   category:'',
+  //   image: '',
+  //   description: ''
+  // };
 
 
   onFileSelected(event: any): void {
@@ -40,17 +57,16 @@ export class AddProductComponent {
 
   saveProduct(): void {
     const formData = new FormData();
-    formData.append('name', this.product.name);
-    formData.append('code', this.product.code);
-    formData.append('category',this.product.selectedCategories);
-    formData.append('description', this.product.description);
+    formData.append('name', this.form.get('name')?.value);
+    formData.append('code', this.form.get('code')?.value);
+    formData.append('category', this.form.get('selectedCategories')?.value);
+    formData.append('description', this.form.get('description')?.value);
     if (this.selectedFile) {
-      formData.append('image', this.selectedFile);
+      formData.append('image', this.selectedFile, this.selectedFile.name);
     }
     this.productService.create(formData).subscribe({
       next: (res) => {
         console.log(res);
-        this.submitted = true;
       },
       error: (e) => console.error(e)
     });

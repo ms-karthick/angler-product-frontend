@@ -1,5 +1,9 @@
-
-<table class="table">
+<div class="container">
+  <h1>Product List</h1>
+  
+  <a href="#" routerLink="/add" class="btn btn-success">Create New Post</a>
+    
+  <table class="table table-striped">
     <thead>
       <tr>
         <th scope="col">#</th>
@@ -7,16 +11,21 @@
         <th scope="col">Code</th>
         <th scope="col">Category</th>
         <th scope="col">Description</th>
+        <th width="250px">Action</th>
       </tr>
     </thead>
     <tbody *ngFor="let datas of data; let i = index">
       <tr>
-        <th scope="row"></th>
+        <th scope="row">{{i+1}}</th>
         <td>{{datas.name}}</td>
         <td>{{datas.code}}</td>
         <td>{{datas.category}}</td>
         <td>{{datas.description}}</td>
+        <td>
+          <a href="#" [routerLink]="['/product/edit', datas.id]" class="btn btn-primary">Edit</a>
+        </td>
       </tr>
      
     </tbody>
   </table>
+  </div>

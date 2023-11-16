@@ -8,14 +8,13 @@ import { ProductService } from 'src/app/services/product.service';
 })
 export class ListProductComponent implements OnInit {
 
-  data?:  Product[];
+  data?:  any[];
  
 
   constructor(private productServices: ProductService) {}
 
   ngOnInit() {
-    this.productServices.getAll().subscribe(
-      data => {
+    this.productServices.getAll().subscribe((data) => {
         this.data = data;
         console.log(data);
       },
@@ -24,4 +23,5 @@ export class ListProductComponent implements OnInit {
       });
   }
   }
+
 
