@@ -1,31 +1,40 @@
 <div class="container">
   <h1>Product List</h1>
   
-  <a href="#" routerLink="/add" class="btn btn-success">Create New Post</a>
-    
-  <table class="table table-striped">
+  <button mat-raised-button (click)="openAddProduct()" color="primary"><span><b>+</b></span></button>
+    <br><br>
+  <table class="table table-bordered border-primary">
     <thead>
       <tr>
         <th scope="col">#</th>
         <th scope="col">Name</th>
         <th scope="col">Code</th>
         <th scope="col">Category</th>
+        <!-- <th scope="col">Image</th> -->
         <th scope="col">Description</th>
         <th width="250px">Action</th>
       </tr>
     </thead>
-    <tbody *ngFor="let datas of data; let i = index">
+    <tbody *ngFor="let datas of dataAll; let i = index">
       <tr>
         <th scope="row">{{i+1}}</th>
         <td>{{datas.name}}</td>
         <td>{{datas.code}}</td>
         <td>{{datas.category}}</td>
+        <!-- <td> 
+          <div *ngIf="datas.image" class="card" style="width: 10rem;">
+          <img [src]="'data:image/png;base64,' + datas.image" alt="Product Image">
+          <div class="card-body">
+          </div>
+          </div>
+        </td> -->
         <td>{{datas.description}}</td>
         <td>
-          <a href="#" [routerLink]="['/product/edit', datas.id]" class="btn btn-primary">Edit</a>
+          <button mat-raised-button (click)="openEditProduct(datas.id)" class="primary">Edit</button>
         </td>
       </tr>
      
     </tbody>
+    <div *ngIf="loading">Loading...</div>
   </table>
   </div>

@@ -1,6 +1,6 @@
 
-<div class="container mt-5">
-    <h1>Edit Product</h1>
+<h2 mat-dialog-title>Edit Product</h2>
+<div mat-dialog-content>
     <!-- <a href="#" routerLink="/" class="btn btn-primary">Back</a> -->
     <form [formGroup]="form" (ngSubmit)="updateProduct()">
 
@@ -12,7 +12,6 @@
           class="form-control"
           id="name"
           formControlName="name"
-          [(ngModel)]="product.name"
           name="name"
         />
         <div *ngIf="f['name'].touched && f['name'].invalid" class="alert alert-danger">
@@ -29,7 +28,6 @@
             id="code"
             formControlName="code"
             name="code"
-            [(ngModel)]="product.code"
           />
           <div *ngIf="f['code'].touched && f['code'].invalid" class="alert alert-danger">
             <div *ngIf="f['code'].errors && f['code'].errors['required']">Code is required.</div>
@@ -38,28 +36,42 @@
        
         
           <div class="form-group mb-3">
-          <label for="category">Category</label>
-          <select id="choices-multiple-remove-button" class="form-control" name="selectedCategories" [(ngModel)]="product.category" formControlName="selectedCategories">
-              <option value="Author">Author</option>
-              <option value="Accordions">Accordions</option>
-              <option value="Multiselect">Multiselect</option>
-              <option value="Search">Search</option>
-          </select>
-          </div>
+            <label for="category">Category</label>
+
+            <ng-multiselect-dropdown
+            [placeholder]="'Category'"
+            [settings]="dropdownSettings"
+            [data]="dropdownList"
+            formControlName="selectedCategories"
+            (onSelect)="onItemSelect($event)"
+            (onSelectAll)="onSelectAll($event)"
+            >
+          </ng-multiselect-dropdown>
+          
+            </div>
+            
 
           <div class="form-group mb-3">
-          <label for="exampleFormControlFile1">Image</label>
-          <input type="file" class="form-control-file" (change)="onFileSelected($event)">
+          <label for="exampleFormControlFile1">Image</label><br>
+          <input type="file" class="form-control-file" (change)="onFileSelected($event)" formControlName="image">
+        </div>
+
+        <div *ngIf="imageSrc" class="card" style="width: 18rem;">
+          <img *ngIf="imageSrc" [src]="'data:image/png;base64,' + imageSrc" alt="Product Image" />
+          <!-- <img [src]="'data:image/png;base64,' + product.image" alt="Product Image"> -->
+          <div class="card-body">
+            <!-- <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> -->
+          </div>
         </div>
 
         <div class="form-group mb-3">
         <label for="description">Description</label>
         <input
+          type="text"
           class="form-control"
           id="description"
           formControlName="description"
           name="description"
-          [(ngModel)]="product.description"
         />
       </div>
 

@@ -1,8 +1,18 @@
 
-    <div class="container mt-5">
-      <h1>Create New Product</h1>
+    
+    <h2 mat-dialog-title>Create New Product</h2>
+      <div mat-dialog-content>
       <!-- <a href="#" routerLink="/" class="btn btn-primary">Back</a> -->
       <form [formGroup]="form" (ngSubmit)="saveProduct()">
+
+        <!-- <div class="example-container">
+          <mat-form-field>
+            <mat-label>Enter your email</mat-label>
+            <input matInput placeholder="pat@example.com" required>
+            
+          </mat-form-field>
+        </div> -->
+
 
         <div class="form-group mb-3">
         
@@ -37,17 +47,32 @@
           
             <div class="form-group mb-3">
             <label for="category">Category</label>
-            <select id="choices-multiple-remove-button" class="form-control" name="selectedCategories" formControlName="selectedCategories">
-                <option value="Author">Author</option>
-                <option value="Accordions">Accordions</option>
-                <option value="Multiselect">Multiselect</option>
-                <option value="Search">Search</option>
-            </select>
+
+            <ng-multiselect-dropdown
+            [placeholder]="'Category'"
+            [settings]="dropdownSettings"
+            [data]="dropdownList"
+            [(ngModel)]="selectedCategories"
+            (onSelect)="onItemSelect($event)"
+            (onSelectAll)="onSelectAll($event)"
+            >
+          </ng-multiselect-dropdown>
+          
             </div>
-  
+
+    
             <div class="form-group mb-3">
             <label for="exampleFormControlFile1">Image</label>
-            <input type="file" class="form-control-file" (change)="onFileSelected($event)">
+            <input type="file" class="form-control-file"  formControlName="image" (change)="onFileSelected($event)">
+
+            <!-- <div *ngIf="form.get('image').hasError('maxSizeExceeded')">
+              File size exceeds the maximum allowed (2 MB).
+            </div> -->
+            <!-- <div *ngIf="form.get('image').hasError('invalidExtension')">
+              Invalid file extension. Allowed extensions: PNG, JPEG.
+            </div> -->
+
+            
           </div>
 
           <div class="form-group mb-3">
@@ -63,7 +88,3 @@
         <button class="btn btn-primary" type="submit" [disabled]="!form.valid">Submit</button>
         </form>
       </div>
-  
-  
-    
- 

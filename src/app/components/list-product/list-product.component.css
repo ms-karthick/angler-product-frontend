@@ -1,5 +1,6 @@
 
-.submit-form {
-    max-width: 400px;
-    margin: auto;
-  }
+.center-dialog {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

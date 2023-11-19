@@ -8,6 +8,12 @@ import { AppComponent } from './app.component';
 import { AddProductComponent } from './components/add-product/add-product.component';
 import { ListProductComponent } from './components/list-product/list-product.component';
 import { EditProductComponent } from './components/edit-product/edit-product.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import {MatButtonModule} from '@angular/material/button';
+import {MatTableModule} from '@angular/material/table';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 
 @NgModule({
   declarations: [
@@ -21,7 +27,13 @@ import { EditProductComponent } from './components/edit-product/edit-product.com
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    BrowserAnimationsModule,
+    MatDialogModule,
+    MatFormFieldModule,
+    MatButtonModule,
+    MatTableModule,
+    NgMultiSelectDropDownModule
 
   ],
   providers: [],
